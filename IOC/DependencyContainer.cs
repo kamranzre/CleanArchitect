@@ -14,6 +14,7 @@ using Core.IRepositories;
 using Infrastructure.Repositories;
 using Application.Services;
 using Core.Entities;
+using System.Reflection;
 
 namespace IOC
 {
@@ -27,7 +28,7 @@ namespace IOC
             services.AddScoped<IDbConnection>(db =>
             new SqlConnection(configuration.GetConnectionString("Shop")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+           services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IUserService, UserService>();
 
@@ -35,5 +36,21 @@ namespace IOC
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
+
+        //public static void RegisterServices(this IServiceCollection services, Assembly assembly)
+        //{
+        //    var types = assembly.GetTypes()
+        //                        .Where(type => type.IsClass && !type.IsAbstract)
+        //                        .ToList();
+
+        //    foreach (var implementationType in types)
+        //    {
+        //        var interfaces = implementationType.GetInterfaces();
+        //        foreach (var interfaceType in interfaces)
+        //        {
+        //            services.AddScoped(interfaceType, implementationType);
+        //        }
+        //    }
+        //}
     }
 }

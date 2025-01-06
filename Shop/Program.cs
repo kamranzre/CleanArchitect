@@ -1,11 +1,12 @@
 using IOC;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.RegisterServices(Assembly.GetExecutingAssembly());
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 DependencyContainer.RegisterService(builder.Services, builder.Configuration);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
