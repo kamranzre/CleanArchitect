@@ -31,7 +31,7 @@ namespace IOC
 
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddAutoMapper(typeof(MappingProfile));
         }

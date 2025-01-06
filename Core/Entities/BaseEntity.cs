@@ -14,10 +14,10 @@ namespace Core.Entities
 
         public DateTime CreateDate { get; set; }
 
-        public DateTime EditationDate { get; set; }
+        public DateTime? EditationDate { get; set; }
 
         public long UserCreate { get; set; }
 
-        public long UserEditation { get; set; }
+        public long? UserEditation { get; set; }
     }
 }
