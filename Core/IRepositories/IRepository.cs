@@ -10,8 +10,8 @@ namespace Core.IRepositories
     {
         Task<TEntity> GetByIdAsync(TKey id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        Task AddAsync(TEntity product);
-        Task UpdateAsync(TEntity product);
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TKey id);
 
         Task<IEnumerable<TEntity>> GetAllDapperAsync();

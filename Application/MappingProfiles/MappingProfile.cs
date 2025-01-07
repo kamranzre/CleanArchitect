@@ -14,7 +14,7 @@ namespace Application.MappingProfiles
         public MappingProfile()
         {
             CreateMap<User, UserViewModel>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(x => x.FullName, y => y.MapFrom(z => z.Name))
                 .ReverseMap();
         }
 

@@ -19,9 +19,9 @@ namespace Infrastructure.Repositories
             _entity = context.Set<TEntity>();
         }
 
-        public async Task AddAsync(TEntity product)
+        public async Task AddAsync(TEntity entity)
         {
-            await _entity.AddAsync(product);
+            await _entity.AddAsync(entity);
         }
 
         public Task DeleteAsync(TKey id)
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(TEntity product)
+        public Task UpdateAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }
