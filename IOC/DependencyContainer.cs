@@ -20,7 +20,7 @@ namespace IOC
 {
     public static class DependencyContainer
     {
-        public static void RegisterService(IServiceCollection services,IConfiguration configuration)
+        public static void RegisterService(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
                options.UseSqlServer(configuration.GetConnectionString("Shop")));
@@ -28,29 +28,14 @@ namespace IOC
             services.AddScoped<IDbConnection>(db =>
             new SqlConnection(configuration.GetConnectionString("Shop")));
 
-           services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddAutoMapper(typeof(MappingProfile));
+
         }
-
-        //public static void RegisterServices(this IServiceCollection services, Assembly assembly)
-        //{
-        //    var types = assembly.GetTypes()
-        //                        .Where(type => type.IsClass && !type.IsAbstract)
-        //                        .ToList();
-
-        //    foreach (var implementationType in types)
-        //    {
-        //        var interfaces = implementationType.GetInterfaces();
-        //        foreach (var interfaceType in interfaces)
-        //        {
-        //            services.AddScoped(interfaceType, implementationType);
-        //        }
-        //    }
-        //}
     }
 }

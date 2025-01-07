@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Core.IRepositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity, TKey> where TEntity : class
     {
-        Task<T> GetByIdAsync(int id);
-        Task<IEnumerable<T>> GetAllAsync();
-        Task AddAsync(T product);
-        Task UpdateAsync(T product);
-        Task DeleteAsync(int id);
+        Task<TEntity> GetByIdAsync(TKey id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task AddAsync(TEntity product);
+        Task UpdateAsync(TEntity product);
+        Task DeleteAsync(TKey id);
 
-        Task<IEnumerable<T>> GetAllDapperAsync();
+        Task<IEnumerable<TEntity>> GetAllDapperAsync();
     }
 }

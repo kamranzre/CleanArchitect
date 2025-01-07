@@ -9,7 +9,7 @@ namespace Core.IRepositories
 {
     public interface IUnitOfWork:IDisposable
     {
-        public IRepository<User> Users { get;}
+        public IRepository<User,int> Users { get;}
         Task<int> CompleteAsync();
         Task ExecuteInTransactionAsync(Func<Task> action);
     }

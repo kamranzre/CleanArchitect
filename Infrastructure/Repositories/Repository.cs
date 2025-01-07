@@ -11,44 +11,44 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class Repository<T> : DbContextBase,IRepository<T> where T : class
+    public class Repository<TEntity, TKey> : DbContextBase, IRepository<TEntity, TKey> where TEntity : class
     {
-        private readonly DbSet<T> _entity;
+        private readonly DbSet<TEntity> _entity;
         public Repository(AppDbContext context, IDbConnection dbConnection) : base(context, dbConnection)
         {
-            _entity = context.Set<T>();
+            _entity = context.Set<TEntity>();
         }
 
-        public async Task AddAsync(T product)
+        public async Task AddAsync(TEntity product)
         {
             await _entity.AddAsync(product);
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(TKey id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _entity.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllDapperAsync()
+        public async Task<IEnumerable<TEntity>> GetAllDapperAsync()
         {
             using (var connection = _dbConnection)
             {
-                var query = $"SELECT * FROM {typeof(T).Name}s";
-                return await connection.QueryAsync<T>(query);
+                var query = $"SELECT * FROM {typeof(TEntity).Name}s";
+                return await connection.QueryAsync<TEntity>(query);
             }
         }
 
-        public Task<T> GetByIdAsync(int id)
+        public Task<TEntity> GetByIdAsync(TKey id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(T product)
+        public Task UpdateAsync(TEntity product)
         {
             throw new NotImplementedException();
         }

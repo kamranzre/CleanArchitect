@@ -17,10 +17,10 @@ namespace Infrastructure.Repositories
     {
         public UnitOfWork(AppDbContext context, IDbConnection dbConnection, IServiceProvider serviceProvider) : base(context, dbConnection)
         {
-            Users = new Repository<User>(_context, _dbConnection);
+            Users = new Repository<User, int>(_context, _dbConnection);
         }
 
-        public IRepository<User> Users { get; }
+        public IRepository<User, int> Users { get; }
 
         public async Task<int> CompleteAsync()
         {
