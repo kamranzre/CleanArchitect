@@ -1,9 +1,14 @@
+using Application.Handler.Commands.Users;
 using IOC;
+using MediatR;
 using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(typeof(UserHandler).GetTypeInfo().Assembly);
+
 // Add services to the container.
+
 builder.Services.RegisterService(builder.Configuration);
 var app = builder.Build();
 

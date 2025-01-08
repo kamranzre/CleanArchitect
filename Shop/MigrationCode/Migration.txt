@@ -1,0 +1,6 @@
+﻿Add-Migration InitialCreateForReadAppDbContext -Context ReadAppDbContext -OutputDir Migrations/ReadAppDbContext
+Add-Migration InitialCreateForWriteAppDbContext -Context WriteAppDbContext -OutputDir Migrations/WriteAppDbContext
+
+
+Update-Database -Context ReadAppDbContext
+Update-Database -Context WriteAppDbContext

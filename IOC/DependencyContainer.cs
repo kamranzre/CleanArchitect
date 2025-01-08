@@ -15,6 +15,8 @@ using Infrastructure.Repositories;
 using Application.Services;
 using Core.Entities;
 using System.Reflection;
+using static Infrastructure.Data.ReadWriteDbContext;
+using Application.Handler.Commands.Users;
 
 namespace IOC
 {
@@ -22,11 +24,14 @@ namespace IOC
     {
         public static void RegisterService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options =>
-               options.UseSqlServer(configuration.GetConnectionString("Shop")));
+            services.AddDbContext<WriteAppDbContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("WriteShop")));
+
+            services.AddDbContext<ReadAppDbContext>(options =>
+               options.UseSqlServer(configuration.GetConnectionString("ReadShop")));
 
             services.AddScoped<IDbConnection>(db =>
-            new SqlConnection(configuration.GetConnectionString("Shop")));
+            new SqlConnection(configuration.GetConnectionString("ReadShop")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -35,7 +40,6 @@ namespace IOC
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddAutoMapper(typeof(MappingProfile));
-
         }
     }
 }

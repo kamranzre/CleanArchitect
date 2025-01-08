@@ -10,26 +10,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static Infrastructure.Data.ReadWriteDbContext;
 
 namespace Infrastructure.Repositories
 {
     public class UnitOfWork : DbContextBase, IUnitOfWork
     {
-        public UnitOfWork(AppDbContext context, IDbConnection dbConnection, IServiceProvider serviceProvider) : base(context, dbConnection)
+        public UnitOfWork(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection) : base(writeContext, readContext, dbConnection)
         {
-            Users = new Repository<User, int>(_context, _dbConnection);
+            Users = new Repository<User, int>(_writeContext,_readContext, _dbConnection);
         }
 
         public IRepository<User, int> Users { get; }
 
         public async Task<int> CompleteAsync()
         {
-            return await _context.SaveChangesAsync();
+            return await _writeContext.SaveChangesAsync();
         }
 
         public async Task ExecuteInTransactionAsync(Func<Task> action)
         {
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            using (var transaction = await _writeContext.Database.BeginTransactionAsync())
             {
                 try
                 {

@@ -5,16 +5,19 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Infrastructure.Data.ReadWriteDbContext;
 
 namespace Infrastructure.Data
 {
     public abstract class DbContextBase : IDisposable
     {
-        protected AppDbContext _context;
+        protected WriteAppDbContext _writeContext;
+        protected ReadAppDbContext _readContext;
         protected readonly IDbConnection _dbConnection;
-        protected DbContextBase(AppDbContext context, IDbConnection dbConnection)
+        protected DbContextBase(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection)
         {
-            _context = context;
+            _writeContext = writeContext;
+            _readContext = readContext;
             _dbConnection = dbConnection;
         }
 
@@ -22,7 +25,8 @@ namespace Infrastructure.Data
 
         public void Dispose()
         {
-           _context.Dispose();
+            _writeContext.Dispose();
+            _readContext.Dispose();
             _dbConnection.Dispose();
         }
     }

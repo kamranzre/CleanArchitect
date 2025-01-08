@@ -1,5 +1,7 @@
+using Application.Commands_Queries.Users.Commands;
 using Application.Services;
 using Core.IRepositories;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 using System.Diagnostics;
@@ -10,10 +12,12 @@ namespace Shop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserService userService;
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+        private readonly IMediator mediator;
+        public HomeController(ILogger<HomeController> logger, IUserService userService, IMediator mediator)
         {
             _logger = logger;
             this.userService = userService;
+            this.mediator = mediator;
         }
 
         public async Task<IActionResult> Index()
@@ -33,9 +37,20 @@ namespace Shop.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Insert()
+        
         {
-            return View();
+           var userCommand = new UserCommand
+            {
+                Name = "Kamran",
+                Email = "Kami@yahoo.com",
+                NationalCode = "2281999629",
+                Password = "Password",
+                UserCreate = 1,
+                UserName = "Kamibboy"
+            };
+            var res = await mediator.Send(userCommand);
+            return View(res);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

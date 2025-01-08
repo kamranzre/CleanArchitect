@@ -1,4 +1,5 @@
-﻿using Application.DTO;
+﻿using Application.Commands_Queries.Users.Commands;
+using Application.DTO;
 using AutoMapper;
 using Core.Entities;
 using System;
@@ -15,6 +16,9 @@ namespace Application.MappingProfiles
         {
             CreateMap<User, UserViewModel>()
                 .ForMember(x => x.FullName, y => y.MapFrom(z => z.Name))
+                .ReverseMap();
+
+            CreateMap<User, UserCommand>()
                 .ReverseMap();
         }
 

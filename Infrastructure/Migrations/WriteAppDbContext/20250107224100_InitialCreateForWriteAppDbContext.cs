@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.WriteAppDbContext
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class InitialCreateForWriteAppDbContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,9 +23,9 @@ namespace Infrastructure.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NationalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserCreate = table.Column<long>(type: "bigint", nullable: false),
-                    UserEditation = table.Column<long>(type: "bigint", nullable: false)
+                    UserEditation = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {

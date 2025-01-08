@@ -8,20 +8,38 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Infrastructure.Data.ReadWriteDbContext;
 
 namespace Infrastructure.Repositories
 {
     public class Repository<TEntity, TKey> : DbContextBase, IRepository<TEntity, TKey> where TEntity : class
     {
-        private readonly DbSet<TEntity> _entity;
-        public Repository(AppDbContext context, IDbConnection dbConnection) : base(context, dbConnection)
+        private readonly DbSet<TEntity> _writeEntity;
+        private readonly DbSet<TEntity> _readEntity;
+        public Repository(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection) : base(writeContext, readContext, dbConnection)
         {
-            _entity = context.Set<TEntity>();
+            _writeEntity = writeContext.Set<TEntity>();
+            _readEntity = readContext.Set<TEntity>();
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await _entity.AddAsync(entity);
+            await _writeEntity.AddAsync(entity);
+        }
+
+        public async Task<TKey> AddResponseAsync(TEntity entity)
+        {
+            if (entity != null)
+            {
+                var add = await _writeEntity.AddAsync(entity);
+                await _writeContext.SaveChangesAsync();
+                var idProperty = add.Property("Id");
+                if (idProperty != null)
+                {
+                    return (TKey)Convert.ChangeType(idProperty.CurrentValue, typeof(TKey));
+                }
+            }
+            return default;
         }
 
         public Task DeleteAsync(TKey id)
@@ -31,7 +49,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _entity.ToListAsync();
+            return await _readEntity.ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllDapperAsync()

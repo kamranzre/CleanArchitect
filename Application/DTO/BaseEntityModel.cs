@@ -9,6 +9,11 @@ namespace Application.DTO
 {
     public class BaseEntityModel
     {
+        public BaseEntityModel()
+        {
+            CreateDate = DateTime.Now;
+        }
+
         [Key]
         public long Id { get; set; }
 

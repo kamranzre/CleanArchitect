@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.WriteAppDbContext
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20250106000049_initDb")]
-    partial class initDb
+    [DbContext(typeof(ReadWriteDbContext.WriteAppDbContext))]
+    [Migration("20250107224100_InitialCreateForWriteAppDbContext")]
+    partial class InitialCreateForWriteAppDbContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EditationDate")
+                    b.Property<DateTime?>("EditationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -58,7 +58,7 @@ namespace Infrastructure.Migrations
                     b.Property<long>("UserCreate")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserEditation")
+                    b.Property<long?>("UserEditation")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserName")

@@ -1,4 +1,5 @@
-﻿using Application.DTO;
+﻿using Application.Commands_Queries.Users.Commands;
+using Application.DTO;
 using AutoMapper;
 using Core.Entities;
 using Core.IRepositories;
@@ -18,6 +19,15 @@ namespace Application.Services
         {
         }
 
+        public async Task<UserResponseCommand> AddUserAsync(UserCommand user)
+        {
+            var req = await UnitOfWork.Users.AddResponseAsync(Mapper.Map<User>(user));
+            return new UserResponseCommand
+            {
+                Id = req,
+                IsSuccess = req > 0
+            };
+        }
 
         public async Task<IEnumerable<UserViewModel>> GetAllAsync(bool isDapper = false)
         {
