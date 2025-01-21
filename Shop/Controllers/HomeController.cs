@@ -3,6 +3,7 @@ using Application.Services;
 using Core.IRepositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Extensions;
 using Shop.Models;
 using System.Diagnostics;
 
@@ -38,25 +39,16 @@ namespace Shop.Controllers
         }
 
         public async Task<IActionResult> Insert()
-        
         {
-           var userCommand = new UserCommand
-            {
-                Name = "Kamran",
-                Email = "Kami@yahoo.com",
-                NationalCode = "2281999629",
-                Password = "Password",
-                UserCreate = 1,
-                UserName = "Kamibboy"
-            };
-            var res = await mediator.Send(userCommand);
-            return View(res);
+            return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [HttpPost]
+        [PreventDoublePost]
+        public async Task<IActionResult> Post(UserCommand userCommand)
+        { 
+            var res = await mediator.Send(userCommand);
+            return PartialView("Insert", res);
         }
     }
 }

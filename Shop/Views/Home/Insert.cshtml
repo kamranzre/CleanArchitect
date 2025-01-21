@@ -1,14 +1,60 @@
 ﻿@using Application.Commands_Queries.Users.Commands
 @model UserResponseCommand
-
 @{
-    ViewData["Title"] = "Privacy Policy";
+	ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
 
 
+<form id="userForm" action="@Url.Action("Post", "Home")" method="post">
+    <div>
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name" value="John Doe" required />
+    </div>
+    <div>
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" value="john.doe@example.com" />
+    </div>
+    <div>
+        <label for="Password">Password</label>
+        <input type="password" id="Password" name="Password" value="password123" />
+    </div>
+    <div>
+        <label for="UserName">UserName</label>
+        <input type="text" id="UserName" name="UserName" value="johndoe" />
+    </div>
+    <div>
+        <label for="NationalCode">NationalCode</label>
+        <input type="text" id="NationalCode" name="NationalCode" value="1234567890" required />
+    </div>
+    <div>
+        <label for="CreateDate">CreateDate</label>
+        <input type="datetime-local" id="CreateDate" name="CreateDate" value="2023-01-01T00:00" />
+    </div>
+    <div>
+        <label for="EditationDate">EditationDate</label>
+        <input type="datetime-local" id="EditationDate" name="EditationDate" value="2023-01-01T00:00" />
+    </div>
+    <div>
+        <label for="UserCreate">UserCreate</label>
+        <input type="number" id="UserCreate" name="UserCreate" value="1" />
+    </div>
+    <div>
+        <label for="UserEditation">UserEditation</label>
+        <input type="number" id="UserEditation" name="UserEditation" value="1" />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+
+
+@if(Model!= null)
+
+{
+
 <span>@Model.Id</span>
 <br />
 <span>@Model.IsSuccess</span>
+}

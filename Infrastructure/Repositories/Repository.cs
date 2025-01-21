@@ -27,16 +27,16 @@ namespace Infrastructure.Repositories
             await _writeEntity.AddAsync(entity);
         }
 
-        public async Task<TKey> AddResponseAsync(TEntity entity)
+        public async Task<TKey?> AddResponseAsync(TEntity entity)
         {
             if (entity != null)
             {
                 var add = await _writeEntity.AddAsync(entity);
                 await _writeContext.SaveChangesAsync();
-                var idProperty = add.Property("Id");
-                if (idProperty != null)
+                var ValurOfProperty = add.Property("Id")?.CurrentValue;
+                if (ValurOfProperty != null)
                 {
-                    return (TKey)Convert.ChangeType(idProperty.CurrentValue, typeof(TKey));
+                    return (TKey)Convert.ChangeType(ValurOfProperty, typeof(TKey));
                 }
             }
             return default;

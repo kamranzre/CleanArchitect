@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.ReadAppDbContext
 {
     [DbContext(typeof(ReadWriteDbContext.ReadAppDbContext))]
-    [Migration("20250107224055_InitialCreateForReadAppDbContext")]
+    [Migration("20250110155843_InitialCreateForReadAppDbContext")]
     partial class InitialCreateForReadAppDbContext
     {
         /// <inheritdoc />
