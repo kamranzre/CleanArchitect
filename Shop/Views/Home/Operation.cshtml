@@ -1,0 +1,74 @@
+﻿@using Core.Enums
+@using Application.DTO
+@model OperationViewModel
+<style>
+	body {
+		font-family: 'Tahoma', sans-serif;
+	}
+
+	.calculator-container {
+		max-width: 500px;
+		padding: 30px;
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		background-color: #f9f9f9;
+	}
+
+	.operation-button {
+		font-size: 24px;
+		padding: 15px;
+		width: 100%;
+		margin-top: 10px;
+	}
+
+		.operation-button:hover {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+	.result-box {
+		margin-top: 20px;
+		padding: 15px;
+		background-color: #e9ecef;
+		text-align: center;
+		border-radius: 5px;
+		font-size: 20px;
+	}
+</style>
+
+
+<div class="d-flex justify-content-center">
+	<div class="calculator-container">
+		<h2 class="text-center mb-4">ماشین حساب چهار عمل اصلی</h2>
+
+		<!-- فرم ورود اعداد -->
+		<form id="calculatorForm" method="POST" action="OperationPost">
+			<input type="hidden" asp-for="operationStr">
+			<div class="form-group">
+				<label asp-for="Num1">عدد اول:</label>
+				<input asp-for="Num1" type="number" class="form-control" placeholder="عدد اول را وارد کنید" required>
+			</div>
+			<div class="form-group">
+				<label asp-for="Num2">عدد دوم:</label>
+				<input asp-for="Num2" type="number" class="form-control" placeholder="عدد دوم را وارد کنید" required>
+			</div>
+
+			<!-- دکمه‌های عملیات‌های ریاضی -->
+			<button type="submit" class="btn btn-primary operation-button" onclick="setValue('@((byte)OperationType.Add)')">جمع</button>
+			<button type="submit" class="btn btn-success operation-button" onclick="setValue('@((byte)OperationType.Subtract)')">تفریق</button>
+			<button type="submit" class="btn btn-warning operation-button" onclick="setValue('@((byte)OperationType.Multiply)')">ضرب</button>
+			<button type="submit" class="btn btn-danger operation-button" onclick="setValue('@((byte)OperationType.Divide)')">تقسیم</button>
+		</form>
+
+		<!-- نمایش نتیجه -->
+		<div id="result" class="result-box">
+			<strong>نتیجه: </strong> <span id="Result">@Model.Result</span>
+		</div>
+	</div>
+</div>
+
+<script>
+	function setValue(value) {
+		document.getElementById('operationStr').value = value;
+	}
+</script>

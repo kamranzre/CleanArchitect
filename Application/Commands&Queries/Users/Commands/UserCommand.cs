@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands_Queries.Users.Commands
 {
-    public class UserCommand : BaseEntityModel, IRequest<UserResponseCommand>
+    public class UserCommand : BaseEntityModel<long>, IRequest<UserResponseCommand>
     {
         public required string Name { get; set; }
 

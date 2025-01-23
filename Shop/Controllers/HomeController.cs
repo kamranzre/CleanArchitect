@@ -1,4 +1,5 @@
 using Application.Commands_Queries.Users.Commands;
+using Application.DTO;
 using Application.Services;
 using Core.IRepositories;
 using MediatR;
@@ -46,9 +47,24 @@ namespace Shop.Controllers
         [HttpPost]
         [PreventDoublePost]
         public async Task<IActionResult> Post(UserCommand userCommand)
-        { 
+        {
             var res = await mediator.Send(userCommand);
             return PartialView("Insert", res);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Operation(OperationViewModel model)
+        {
+            return View(new OperationViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OperationPost(OperationViewModel model)
+        {
+            OperationManager operation = new OperationManager();
+            model.Result = operation.ExecuteOperation((byte)model.OperationType.Value, model.Num1, model.Num2).ToString();
+            return View("Operation", model);
+        }
+
     }
 }

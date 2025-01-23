@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Application.DTO
 {
-    public class UserViewModel:BaseEntityModel
+    public class UserViewModel : BaseEntityModel<long>
     {
         public UserViewModel()
-        {        
+        {
+            
         }
 
         public required string FullName { get; set; }

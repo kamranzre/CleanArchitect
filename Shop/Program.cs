@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddMediatR(typeof(UserHandler).GetTypeInfo().Assembly);
-
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 // Add services to the container.
 
 builder.Services.RegisterService(builder.Configuration);

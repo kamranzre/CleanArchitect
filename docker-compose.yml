@@ -1,0 +1,30 @@
+services:
+  shop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - sqlserver_primary
+      - sqlserver_secondary
+
+  sqlserver_primary:
+    container_name: sqlserver_primary-v2
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "2281999629K@"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+
+  sqlserver_secondary:
+    container_name: sqlserver_secondary-v2
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "2281999629K@"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1435:1433"
