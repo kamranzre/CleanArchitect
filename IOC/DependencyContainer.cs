@@ -15,6 +15,9 @@ using Infrastructure.Repositories;
 using Application.Services;
 using Core.Entities;
 using System.Reflection;
+using Infrastructure.Repositories.Caching;
+using Application.DTO;
+using System.Runtime.CompilerServices;
 
 namespace IOC
 {
@@ -33,6 +36,8 @@ namespace IOC
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+
+            services.AddSingleton<IRedisCacheService, RedisCacheService>();
 
             services.AddAutoMapper(typeof(MappingProfile));
 

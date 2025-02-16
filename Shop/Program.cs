@@ -1,8 +1,12 @@
+using Application.DTO;
 using IOC;
+using Shop.Middlewares;
 using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<RedisKeysOptions>(builder.Configuration.GetSection("RedisKeys"));
+
 // Add services to the container.
 builder.Services.RegisterService(builder.Configuration);
 var app = builder.Build();
@@ -21,7 +25,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.UseMiddleware<SeedUsersMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
