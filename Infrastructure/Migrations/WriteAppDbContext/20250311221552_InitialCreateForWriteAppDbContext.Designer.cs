@@ -4,16 +4,19 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations.ReadAppDbContext
+namespace Infrastructure.Migrations.WriteAppDbContext
 {
-    [DbContext(typeof(ReadWriteDbContext.ReadAppDbContext))]
-    partial class ReadAppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ReadWriteDbContext.WriteAppDbContext))]
+    [Migration("20250311221552_InitialCreateForWriteAppDbContext")]
+    partial class InitialCreateForWriteAppDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
