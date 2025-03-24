@@ -18,7 +18,7 @@ namespace Core.Entities
 
         public string Password { get; set; }
 
-        public string UserName { get; set; } = string.Empty;
+        public string UserName { get; set; }
 
         public string NationalCode { get; set; }
     }

@@ -24,7 +24,7 @@ namespace Shop.Controllers
 
         public async Task<IActionResult> Index()
         {
-
+            await userService.InsertRandomUsersAsync(1000);
             var dapperwatch = Stopwatch.StartNew();
             var lstDapper = await userService.GetAllAsync(true);
             dapperwatch.Stop();

@@ -31,7 +31,7 @@ namespace IOC
                options.UseSqlServer(configuration.GetConnectionString("ReadShop")));
 
             services.AddScoped<IDbConnection>(db =>
-            new SqlConnection(configuration.GetConnectionString("ReadShop")));
+            new SqlConnection(configuration.GetConnectionString("WriteShop")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

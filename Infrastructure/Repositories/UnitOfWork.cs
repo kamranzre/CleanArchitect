@@ -2,6 +2,7 @@
 using Core.IRepositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace Infrastructure.Repositories
 {
     public class UnitOfWork : DbContextBase, IUnitOfWork
     {
-        public UnitOfWork(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection) : base(writeContext, readContext, dbConnection)
+        public UnitOfWork(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection, IConfiguration configuration) : base(writeContext, readContext, dbConnection, configuration)
         {
-            Users = new Repository<User, int>(_writeContext,_readContext, _dbConnection);
+            Users = new Repository<User, int>(_writeContext,_readContext, dbConnection, configuration);
         }
 
         public IRepository<User, int> Users { get; }

@@ -13,5 +13,6 @@ namespace Application.Services
         Task<IEnumerable<UserViewModel>> GetAllAsync(bool isDapper = false);
 
         Task<UserResponseCommand> AddUserAsync(UserCommand user);
+        Task InsertRandomUsersAsync(int count);
     }
 }

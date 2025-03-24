@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,11 +15,13 @@ namespace Infrastructure.Data
         protected WriteAppDbContext _writeContext;
         protected ReadAppDbContext _readContext;
         protected readonly IDbConnection _dbConnection;
-        protected DbContextBase(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection)
+        protected readonly IConfiguration _configuration;
+        protected DbContextBase(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection, IConfiguration configuration)
         {
             _writeContext = writeContext;
             _readContext = readContext;
             _dbConnection = dbConnection;
+            _configuration = configuration;
         }
 
         protected abstract void ConfigureEntities(ModelBuilder modelBuilder);

@@ -16,5 +16,6 @@ namespace Core.IRepositories
         Task DeleteAsync(TKey id);
 
         Task<IEnumerable<TEntity>> GetAllDapperAsync();
+        Task InsertListDapperAsync(string query, List<TEntity> T);
     }
 }

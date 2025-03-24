@@ -1,7 +1,9 @@
-﻿using Core.IRepositories;
+﻿using Core.Entities;
+using Core.IRepositories;
 using Dapper;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +18,9 @@ namespace Infrastructure.Repositories
     {
         private readonly DbSet<TEntity> _writeEntity;
         private readonly DbSet<TEntity> _readEntity;
-        public Repository(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection) : base(writeContext, readContext, dbConnection)
+        private readonly IConfiguration configuration;
+        public Repository(WriteAppDbContext writeContext, ReadAppDbContext readContext, IDbConnection dbConnection, IConfiguration configuration) 
+            : base(writeContext, readContext, dbConnection, configuration)
         {
             _writeEntity = writeContext.Set<TEntity>();
             _readEntity = readContext.Set<TEntity>();
@@ -56,8 +60,18 @@ namespace Infrastructure.Repositories
         {
             using (var connection = _dbConnection)
             {
+                connection.ConnectionString = _configuration.GetConnectionString("ReadShop");
                 var query = $"SELECT * FROM {typeof(TEntity).Name}s";
                 return await connection.QueryAsync<TEntity>(query);
+            }
+        }
+
+        public async Task InsertListDapperAsync(string query, List<TEntity> T)
+        {
+            using (var connection = _dbConnection)
+            {
+                connection.Open();
+                await connection.ExecuteAsync(query, T);
             }
         }
 
